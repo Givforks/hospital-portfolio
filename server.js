@@ -37,11 +37,35 @@ const User = sequelize.define('User', {
 });
 
 // Sync models
-sequelize.sync();
+sequelize.sync()
+    .then(() => console.log('Models synchronized...'))
+    .catch(err => console.log('Error: ' + err));
 
 // Routes
 app.get('/', (req, res) => res.send('Hospital Portfolio API'));
 
-// Start server
-app.listen(port, () => console.log(`Server running on port ${port}`));
+// Create a new user
+app.post('/users', async (req, res) => {
+    try {
+        const user = await User.create(req.body);
+        res.status(201).json(user);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
+// Get all users
+app.get('/users', async (req, res) => {
+    try {
+        const users = await User.findAll();
+        res.status(200).json(users);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Start the server
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+});
 
