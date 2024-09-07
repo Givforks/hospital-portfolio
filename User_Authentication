@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const { Sequelize, DataTypes } = require('sequelize');
 
 const app = express();
-const port = 3000;
 
 // Middleware
 app.use(bodyParser.json());
