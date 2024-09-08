@@ -28,9 +28,8 @@ app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
 
-const sequelize = new Sequelize('hospital_db', 'your_db_username', 'your_db_password', {
-  host: '127.0.0.1',
-  dialect: 'postgres',
-  port: 5432, // Ensure this is the correct port
-  logging: false // Disable logging if you prefer
+const { Sequelize } = require('sequelize');
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
+  host: process.env.DB_HOST,
+  dialect: 'postgres'
 });
